@@ -1,0 +1,133 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Placeholder</PageTitle>
+<table class="mcga-table" tabindex="1" @onkeydown="HandleKeyDownAsync" @onkeydown:preventDefault="ShouldPreventDefault" autofocus>
+	@foreach (var row in Enumerable.Range(0, CHARACTER_ROWS))
+	{
+		<tr>
+			@foreach (var column in Enumerable.Range(0, CHARACTER_COLUMNS))
+			{
+				<td class="mcga-td" style="background-position: @GetBackgroundPosition(column, row)"></td>
+			}
+		</tr>
+	}
+	<tr>
+		<td colspan="@CHARACTER_COLUMNS" style="text-align:center;">
+			<button style="width:10%" @onclick="HandleLeftArrowAsync">&larr;</button>
+			<button style="width:10%" @onclick="HandleUpArrowAsync">&uarr;</button>
+			<button style="width:10%" @onclick="HandleDownArrowAsync">&darr;</button>
+			<button style="width:10%" @onclick="HandleRightArrowAsync">&rarr;</button>
+			<button style="width:10%" @onclick="HandleSpaceAsync">Space</button>
+			<button style="width:10%" @onclick="HandleBackspaceAsync">Backspace</button>
+			Mute? <input type="checkbox" @onclick="HandleMuteToggleAsync"/>
+		</td>
+	</tr>
+</table>
+<audio id="Craft" src="sfx/Craft.wav"></audio>
+<audio id="Take" src="sfx/Take.wav"></audio>
+<audio id="Eat" src="sfx/Eat.wav"></audio>
+<audio id="WooHoo" src="sfx/WooHoo.wav"></audio>
+<audio id="Shucks" src="sfx/Shucks.wav"></audio>
+<audio id="Yoink" src="sfx/Yoink.wav"></audio>
+<audio id="Tasty" src="sfx/Tasty.wav"></audio>
+<audio id="EnemyHit" src="sfx/EnemyHit.wav"></audio>
+<audio id="EnemyMiss" src="sfx/EnemyMiss.wav"></audio>
+<audio id="EnemyDeath" src="sfx/EnemyDeath.wav"></audio>
+<audio id="PlayerHit" src="sfx/PlayerHit.wav"></audio>
+<audio id="PlayerMiss" src="sfx/PlayerMiss.wav"></audio>
+<audio id="PlayerDeath" src="sfx/PlayerDeath.wav"></audio>
+@code{
+	IUIContext context = new UIContext(CHARACTER_COLUMNS, CHARACTER_ROWS, FrameBuffer);
+	const int CHARACTER_COLUMNS = 40;
+	const int CHARACTER_ROWS = 25;
+	const int CHARACTER_WIDTH = 24;
+	const int CHARACTER_HEIGHT = 24;
+	const int CHARACTER_COUNT = 256;
+	static int[] FrameBuffer = new int[CHARACTER_ROWS * CHARACTER_COLUMNS];
+	private bool ShouldPreventDefault = false;
+	string GetBackgroundPosition(int column, int row)
+	{
+		int character = FrameBuffer[column + row * CHARACTER_COLUMNS];
+		int characterX = -(character % CHARACTER_COUNT) * CHARACTER_WIDTH;
+		int characterY = -(character / CHARACTER_COUNT) * CHARACTER_HEIGHT;
+		return $"{characterX}px {characterY}px";
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+		context.Refresh();
+		await ProcessSfxAsync();
+	}
+	private async Task ProcessSfxAsync()
+	{
+		while (context.Event != null)
+		{
+			await JSRuntime.InvokeVoidAsync("handleEvent", context.Event);
+		context.NextEvent();
+		}
+	}
+	readonly IReadOnlyDictionary<string, string> CommandTable = new Dictionary<string, string>()
+	{
+		["q"] = Command.Left,
+		["z"] = Command.Up,
+		["w"] = Command.Up,
+		["a"] = Command.Left,
+		["s"] = Command.Down,
+		["d"] = Command.Right,
+		["ArrowUp"] = Command.Up,
+		["ArrowDown"] = Command.Down,
+		["ArrowLeft"] = Command.Left,
+		["ArrowRight"] = Command.Right,
+		[" "] = Command.Green,
+		["Enter"] = Command.Blue,
+		["Tab"] = Command.Yellow,
+		["Backspace"] = Command.Red
+	};
+	private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+	{
+		if (CommandTable.TryGetValue(args.Key, out string? command))
+		{
+			ShouldPreventDefault = true;
+			await HandleCommandAsync(command);
+		}
+		else
+		{
+			ShouldPreventDefault = false;
+		}
+	}
+	private async Task HandleCommandAsync(string command)
+	{
+		context!.HandleCommand(command);
+		context!.Refresh();
+		await ProcessSfxAsync();
+	}
+	private async Task HandleLeftArrowAsync(MouseEventArgs args)
+	{
+		await HandleCommandAsync(UI.Command.Left);
+	}
+	private async Task HandleUpArrowAsync(MouseEventArgs args)
+	{
+		await HandleCommandAsync(UI.Command.Up);
+	}
+	private async Task HandleDownArrowAsync(MouseEventArgs args)
+	{
+		await HandleCommandAsync(UI.Command.Down);
+	}
+	private async Task HandleRightArrowAsync(MouseEventArgs args)
+	{
+		await HandleCommandAsync(UI.Command.Right);
+	}
+	private async Task HandleSpaceAsync(MouseEventArgs args)
+	{
+		await HandleCommandAsync(UI.Command.Green);
+	}
+	private async Task HandleBackspaceAsync(MouseEventArgs args)
+	{
+		await HandleCommandAsync(UI.Command.Red);
+	}
+	private async Task HandleMuteToggleAsync(MouseEventArgs args)
+	{
+		await JSRuntime.InvokeVoidAsync("toggleMute");
+	}
+}
