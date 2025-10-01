@@ -29,12 +29,6 @@ Public Class World
         End Set
     End Property
 
-    Public ReadOnly Property MessageCount As Integer Implements IWorld.MessageCount
-        Get
-            Return Data.Messages.Count
-        End Get
-    End Property
-
     Protected Overrides ReadOnly Property EntityData As WorldData
         Get
             Return Data
@@ -44,6 +38,12 @@ Public Class World
     Public ReadOnly Property ActiveLocations As IEnumerable(Of ILocation) Implements IWorld.ActiveLocations
         Get
             Return EntityData.ActiveLocations.Select(Function(x) New Location(Data, x, AddressOf PlaySfx))
+        End Get
+    End Property
+
+    Public ReadOnly Property Messages As IEnumerable(Of IMessage) Implements IWorld.Messages
+        Get
+            Return Enumerable.Range(0, EntityData.Messages.Count).Select(Function(x) New Message(Data, x))
         End Get
     End Property
 
@@ -67,10 +67,6 @@ Public Class World
         CreateMaps()
         CreateCharacters()
         CreateItems()
-        AddMessage(MoodType.Info, "Welcome to (PLACEHOLDER)")
-        AddMessage(MoodType.Info, "MOVE: Arrows, WASD, ZQSD")
-        AddMessage(MoodType.Info, "ACTION MENU: Space")
-        AddMessage(MoodType.Info, "GAME MENU: Backspace")
     End Sub
 
     Private Sub CreateItems()
@@ -89,10 +85,8 @@ Public Class World
         Data.Messages.Add(New MessageData With {.Mood = mood, .Text = text})
     End Sub
 
-    Public Sub DismissMessage() Implements IWorld.DismissMessage
-        If Data.Messages.Any Then
-            Data.Messages.RemoveAt(0)
-        End If
+    Public Sub DismissMessages() Implements IWorld.DismissMessages
+        Data.Messages.Clear()
     End Sub
 
     Private Sub CreateCharacters()
@@ -175,10 +169,6 @@ Public Class World
 
     Public Function GetLocation(locationId As Integer) As ILocation Implements IWorld.GetLocation
         Return New Location(Data, locationId, AddressOf PlaySfx)
-    End Function
-
-    Public Function GetMessage(line As Integer) As IMessage Implements IWorld.GetMessage
-        Return New Message(Data, line)
     End Function
 
     Public Function GetItem(itemId As Integer) As IItem Implements IWorld.GetItem

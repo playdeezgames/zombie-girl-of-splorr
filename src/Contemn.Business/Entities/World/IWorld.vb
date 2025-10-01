@@ -14,9 +14,8 @@ Public Interface IWorld
     Function GetItem(itemId As Integer) As IItem
     Property Avatar As ICharacter
     Sub AddMessage(mood As String, text As String)
-    ReadOnly Property MessageCount As Integer
-    Sub DismissMessage()
-    Function GetMessage(line As Integer) As IMessage
+    Sub DismissMessages()
+    ReadOnly Property Messages As IEnumerable(Of IMessage)
     Function CreateGenerator() As IGenerator
     Function GetGenerator(generatorId As Integer) As IGenerator
     Function ProcessTurn() As IEnumerable(Of IDialogLine)
