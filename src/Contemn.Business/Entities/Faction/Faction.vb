@@ -36,4 +36,12 @@ Public Class Faction
         Clear()
         Data.RecycledFactions.Add(FactionId)
     End Sub
+
+    Public Sub AddCharacter(character As ICharacter) Implements IFaction.AddCharacter
+        EntityData.CharacterIds.Add(character.CharacterId)
+    End Sub
+
+    Public Sub RemoveCharacter(character As ICharacter) Implements IFaction.RemoveCharacter
+        EntityData.CharacterIds.Remove(character.CharacterId)
+    End Sub
 End Class

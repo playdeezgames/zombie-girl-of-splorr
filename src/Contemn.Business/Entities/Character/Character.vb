@@ -63,10 +63,16 @@ Friend Class Character
             Return Nothing
         End Get
         Set(value As IFaction)
+            If Faction IsNot Nothing Then
+                Faction.RemoveCharacter(Me)
+            End If
             If value IsNot Nothing Then
                 SetStatistic(StatisticType.FactionId, value.FactionId)
             Else
                 SetStatistic(StatisticType.FactionId, Nothing)
+            End If
+            If Faction IsNot Nothing Then
+                Faction.AddCharacter(Me)
             End If
         End Set
     End Property

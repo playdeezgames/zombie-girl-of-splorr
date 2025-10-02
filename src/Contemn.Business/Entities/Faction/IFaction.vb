@@ -3,4 +3,6 @@
     ReadOnly Property FactionId As Integer
     ReadOnly Property FactionType As String
     ReadOnly Property Name As String
+    Sub AddCharacter(character As ICharacter)
+    Sub RemoveCharacter(character As ICharacter)
 End Interface
