@@ -2,14 +2,12 @@
 
 Friend Class NavigationDialog
     Inherits BaseDialog
-
     Private Shared ReadOnly ACTIONS_CHOICE As String = NameOf(ACTIONS_CHOICE)
     Private Shared ReadOnly GAME_MENU_CHOICE As String = NameOf(GAME_MENU_CHOICE)
     Private Shared ReadOnly MOVE_CHOICE As String = NameOf(MOVE_CHOICE)
     Const ACTIONS_TEXT = "Actions..."
     Const GAME_MENU_TEXT = "Game Menu..."
     Const MOVE_TEXT = "Move..."
-
     Private ReadOnly character As ICharacter
 
     Public Sub New(character As ICharacter)

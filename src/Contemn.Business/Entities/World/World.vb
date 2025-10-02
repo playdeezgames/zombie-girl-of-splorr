@@ -64,9 +64,19 @@ Public Class World
     End Sub
     Public Overrides Sub Initialize()
         MyBase.Initialize()
+        CreateFactions()
         CreateMaps()
         CreateCharacters()
         CreateItems()
+    End Sub
+
+    Private Sub CreateFactions()
+        For Each factionType In FactionTypes.All
+            Dim descriptor = factionType.ToFactionTypeDescriptor()
+            For Each dummy In Enumerable.Range(0, descriptor.FactionCount)
+                CreateFaction(factionType)
+            Next
+        Next
     End Sub
 
     Private Sub CreateItems()
@@ -216,4 +226,19 @@ Public Class World
     Public Sub DeactivateLocation(location As ILocation) Implements IWorld.DeactivateLocation
         EntityData.ActiveLocations.Remove(location.LocationId)
     End Sub
+
+    Public Function CreateFaction(factionType As String) As IFaction Implements IWorld.CreateFaction
+        Dim factionId As Integer
+        If Data.RecycledFactions.Any Then
+            factionId = Data.RecycledFactions.First
+            Data.RecycledFactions.Remove(factionId)
+            Data.Factions(factionId) = New FactionData With {.factionType = factionType}
+        Else
+            factionId = Data.Factions.Count
+            Data.Factions.Add(New FactionData With {.factionType = factionType})
+        End If
+        Dim result As IFaction = New Faction(Data, factionId, AddressOf PlaySfx)
+        result.Initialize()
+        Return result
+    End Function
 End Class

@@ -13,4 +13,6 @@ Public Class WorldData
     Property Generators As New List(Of Dictionary(Of String, Integer))
     Property RecycledGenerators As New HashSet(Of Integer)
     Property ActiveLocations As New HashSet(Of Integer)
+    Property Factions As New List(Of FactionData)
+    Property RecycledFactions As New HashSet(Of Integer)
 End Class
