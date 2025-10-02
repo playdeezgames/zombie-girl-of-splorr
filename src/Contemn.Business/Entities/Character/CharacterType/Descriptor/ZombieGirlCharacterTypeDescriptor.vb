@@ -10,6 +10,7 @@ Friend Class ZombieGirlCharacterTypeDescriptor
     Friend Overrides Sub OnInitialize(character As ICharacter)
         character.Faction = character.World.Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
         character.World.Avatar = character
+        character.SetMetadata(MetadataType.Name, "Fumiko Fujimoto")
     End Sub
 
     Friend Overrides Function OnBump(character As ICharacter, location As ILocation) As IDialog
@@ -58,5 +59,9 @@ Friend Class ZombieGirlCharacterTypeDescriptor
 
     Friend Overrides Function OnNavigate(character As Character) As IDialog
         Return New NavigationDialog(character)
+    End Function
+
+    Friend Overrides Function GetName(character As Character) As String
+        Return character.GetMetadata(MetadataType.Name)
     End Function
 End Class

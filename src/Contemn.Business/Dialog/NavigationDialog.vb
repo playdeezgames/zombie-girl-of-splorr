@@ -11,17 +11,14 @@ Friend Class NavigationDialog
     Private ReadOnly character As ICharacter
 
     Public Sub New(character As ICharacter)
-        MyBase.New("Navigation", GenerateChoices(character), GenerateLines(character))
+        MyBase.New(character.Name, GenerateChoices(character), GenerateLines(character))
         Me.character = character
     End Sub
 
     Private Shared Function GenerateLines(character As ICharacter) As IEnumerable(Of IDialogLine)
         Dim result = character.World.Messages.Select(Function(x) New DialogLine(x.Mood, x.Text)).ToList
         character.World.DismissMessages()
-        Dim location = character.Location
         Return result.
-            Append(New DialogLine(MoodType.Info, $"Terrain: {location.LocationType.ToLocationTypeDescriptor.LocationTypeName}")).
-            Append(New DialogLine(MoodType.Info, $"Position: ({location.Column},{location.Row})")).
             Append(New DialogLine(MoodType.Info, $"Faction: {character.Faction.Name}"))
     End Function
 
