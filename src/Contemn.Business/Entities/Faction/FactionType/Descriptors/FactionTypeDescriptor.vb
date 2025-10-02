@@ -5,4 +5,6 @@
         Me.FactionType = factionType
         Me.FactionCount = factionCount
     End Sub
+
+    Friend MustOverride Function GetName(faction As Faction) As String
 End Class

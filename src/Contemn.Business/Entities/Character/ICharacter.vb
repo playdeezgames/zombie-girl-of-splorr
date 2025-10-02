@@ -15,4 +15,5 @@ Public Interface ICharacter
     ReadOnly Property Row As Integer
     Function ProcessTurn() As IEnumerable(Of IDialogLine)
     Function Navigate() As IDialog
+    Property Faction As IFaction
 End Interface

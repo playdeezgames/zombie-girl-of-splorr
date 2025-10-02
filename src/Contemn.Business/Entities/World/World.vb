@@ -47,6 +47,14 @@ Public Class World
         End Get
     End Property
 
+    Public ReadOnly Property Factions As IEnumerable(Of IFaction) Implements IWorld.Factions
+        Get
+            Dim factionIds As New HashSet(Of Integer)(Enumerable.Range(0, Data.Factions.Count))
+            factionIds.RemoveWhere(Function(x) Data.RecycledFactions.Contains(x))
+            Return factionIds.Select(Function(x) GetFaction(x))
+        End Get
+    End Property
+
     Public Overrides Sub Clear()
         MyBase.Clear()
         Data.Maps.Clear()
@@ -157,7 +165,9 @@ Public Class World
         Return result
     End Function
 
-    Public Function CreateItem(itemType As String, entity As IInventoryEntity) As IItem Implements IWorld.CreateItem
+    Public Function CreateItem(
+                              itemType As String,
+                              entity As IInventoryEntity) As IItem Implements IWorld.CreateItem
         Dim itemId As Integer
         If Data.RecycledItems.Any Then
             itemId = Data.RecycledItems.First
@@ -240,5 +250,9 @@ Public Class World
         Dim result As IFaction = New Faction(Data, factionId, AddressOf PlaySfx)
         result.Initialize()
         Return result
+    End Function
+
+    Public Function GetFaction(factionId As Integer) As IFaction Implements IWorld.GetFaction
+        Return New Faction(Data, factionId, AddressOf PlaySfx)
     End Function
 End Class

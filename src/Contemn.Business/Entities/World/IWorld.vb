@@ -23,4 +23,6 @@ Public Interface IWorld
     Sub DeactivateLocation(location As ILocation)
     ReadOnly Property ActiveLocations As IEnumerable(Of ILocation)
     Function CreateFaction(factionType As String) As IFaction
+    ReadOnly Property Factions As IEnumerable(Of IFaction)
+    Function GetFaction(factionId As Integer) As IFaction
 End Interface

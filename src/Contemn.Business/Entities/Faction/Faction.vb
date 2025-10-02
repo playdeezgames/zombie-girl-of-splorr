@@ -14,6 +14,18 @@ Public Class Faction
 
     Public ReadOnly Property FactionId As Integer Implements IFaction.FactionId
 
+    Public ReadOnly Property FactionType As String Implements IFaction.FactionType
+        Get
+            Return EntityData.FactionType
+        End Get
+    End Property
+
+    Public ReadOnly Property Name As String Implements IFaction.Name
+        Get
+            Return FactionType.ToFactionTypeDescriptor.GetName(Me)
+        End Get
+    End Property
+
     Protected Overrides ReadOnly Property EntityData As FactionData
         Get
             Return Data.Factions(FactionId)

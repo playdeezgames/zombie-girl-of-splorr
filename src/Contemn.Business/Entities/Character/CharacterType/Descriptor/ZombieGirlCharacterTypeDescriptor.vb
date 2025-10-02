@@ -1,20 +1,14 @@
 ﻿Imports TGGD.Business
 
-Friend Class N00bCharacterTypeDescriptor
+Friend Class ZombieGirlCharacterTypeDescriptor
     Inherits CharacterTypeDescriptor
 
     Public Sub New()
-        MyBase.New(NameOf(N00bCharacterTypeDescriptor), 1)
+        MyBase.New(NameOf(ZombieGirlCharacterTypeDescriptor), 1)
     End Sub
 
-    Const MAXIMUM_SATIETY = 100
-    Const MAXIMUM_HEALTH = 100
-    Const MAXIMUM_HYDRATION = 100
-    Const SATIETY_WARNING = MAXIMUM_SATIETY / 10
-    Const HYDRATION_WARNING = MAXIMUM_HYDRATION / 10
-    Const MAXIMUM_RECOVERY = 10
-
     Friend Overrides Sub OnInitialize(character As ICharacter)
+        character.Faction = character.World.Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
         character.World.Avatar = character
     End Sub
 

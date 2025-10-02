@@ -21,7 +21,8 @@ Friend Class NavigationDialog
         Dim location = character.Location
         Return result.
             Append(New DialogLine(MoodType.Info, $"Terrain: {location.LocationType.ToLocationTypeDescriptor.LocationTypeName}")).
-            Append(New DialogLine(MoodType.Info, $"Position: ({location.Column},{location.Row})"))
+            Append(New DialogLine(MoodType.Info, $"Position: ({location.Column},{location.Row})")).
+            Append(New DialogLine(MoodType.Info, $"Faction: {character.Faction.Name}"))
     End Function
 
     Private Shared Function GenerateChoices(character As ICharacter) As IEnumerable(Of IDialogChoice)

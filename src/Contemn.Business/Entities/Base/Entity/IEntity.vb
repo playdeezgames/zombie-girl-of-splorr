@@ -6,6 +6,7 @@
     ReadOnly Property World As IWorld
     Sub SetStatistic(statisticType As String, statisticValue As Integer?)
     Function GetStatistic(statisticType As String) As Integer
+    Function TryGetStatistic(statisticType As String) As Integer?
     Function HasStatistic(statisticType As String) As Boolean
     Sub SetStatisticMaximum(statisticType As String, statisticMaximum As Integer?)
     Sub SetStatisticMinimum(statisticType As String, statisticMinimum As Integer?)

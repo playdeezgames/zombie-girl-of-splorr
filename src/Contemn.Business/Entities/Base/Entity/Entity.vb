@@ -125,4 +125,11 @@ Public MustInherit Class Entity(Of TEntityData As EntityData)
     Public Function HasStatistic(statisticType As String) As Boolean Implements IEntity.HasStatistic
         Return EntityData.Statistics.ContainsKey(statisticType)
     End Function
+
+    Public Function TryGetStatistic(statisticType As String) As Integer? Implements IEntity.TryGetStatistic
+        Return If(
+            HasStatistic(statisticType),
+            GetStatistic(statisticType),
+            Nothing)
+    End Function
 End Class
