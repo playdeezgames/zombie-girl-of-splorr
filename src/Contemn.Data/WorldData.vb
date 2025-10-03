@@ -1,7 +1,5 @@
 Public Class WorldData
     Inherits EntityData
-    Property Maps As New List(Of MapData)
-    Property RecycledMaps As New HashSet(Of Integer)
     Property Locations As New List(Of LocationData)
     Property RecycledLocations As New HashSet(Of Integer)
     Property Characters As New List(Of CharacterData)

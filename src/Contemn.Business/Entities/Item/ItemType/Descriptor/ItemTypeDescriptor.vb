@@ -15,7 +15,6 @@ Friend MustInherit Class ItemTypeDescriptor
         Me.ItemCount = itemCount
         Me.IsAggregate = isAggregate
     End Sub
-    Friend MustOverride Function CanSpawnMap(map As IMap) As Boolean
     Friend MustOverride Function CanSpawnLocation(location As ILocation) As Boolean
     Friend MustOverride Function GetName(item As IItem) As String
     Friend MustOverride Function Choose(item As IItem, character As ICharacter, choice As String) As IDialog

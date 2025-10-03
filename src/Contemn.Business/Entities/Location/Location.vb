@@ -38,30 +38,9 @@ Friend Class Location
     Public Overrides Sub Clear()
         MyBase.Clear()
         EntityData.LocationType = Nothing
-        EntityData.MapId = 0
-        EntityData.Column = 0
-        EntityData.Row = 0
         EntityData.CharacterId = Nothing
         World.DeactivateLocation(Me)
     End Sub
-
-    Public ReadOnly Property Column As Integer Implements ILocation.Column
-        Get
-            Return EntityData.Column
-        End Get
-    End Property
-
-    Public ReadOnly Property Row As Integer Implements ILocation.Row
-        Get
-            Return EntityData.Row
-        End Get
-    End Property
-
-    Public ReadOnly Property Map As IMap Implements ILocation.Map
-        Get
-            Return New Map(Data, EntityData.MapId, AddressOf PlaySfx)
-        End Get
-    End Property
 
     Public ReadOnly Property HasCharacter As Boolean Implements ILocation.HasCharacter
         Get

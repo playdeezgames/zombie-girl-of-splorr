@@ -9,14 +9,6 @@ Public Class World
         MyBase.New(data, playSfx)
     End Sub
 
-    Public ReadOnly Property Maps As IEnumerable(Of IMap) Implements IWorld.Maps
-        Get
-            Return Enumerable.
-                Range(0, Data.Maps.Count).
-                Select(Function(x) New Business.Map(Data, x, AddressOf PlaySfx))
-        End Get
-    End Property
-
     Public Property Avatar As ICharacter Implements IWorld.Avatar
         Get
             Return If(
@@ -57,8 +49,6 @@ Public Class World
 
     Public Overrides Sub Clear()
         MyBase.Clear()
-        Data.Maps.Clear()
-        Data.RecycledMaps.Clear()
         Data.Locations.Clear()
         Data.RecycledLocations.Clear()
         Data.Characters.Clear()
@@ -73,9 +63,7 @@ Public Class World
     Public Overrides Sub Initialize()
         MyBase.Initialize()
         CreateFactions()
-        CreateMaps()
-        CreateCharacters()
-        CreateItems()
+        CreateCharacter(NameOf(ZombieGirlCharacterTypeDescriptor), CreateLocation(NameOf(DirtLocationTypeDescriptor)))
     End Sub
 
     Private Sub CreateFactions()
@@ -83,18 +71,6 @@ Public Class World
             Dim descriptor = factionType.ToFactionTypeDescriptor()
             For Each dummy In Enumerable.Range(0, descriptor.FactionCount)
                 CreateFaction(factionType)
-            Next
-        Next
-    End Sub
-
-    Private Sub CreateItems()
-        For Each itemType In ItemTypes.All
-            Dim descriptor = itemType.ToItemTypeDescriptor
-            Dim candidateMaps = Maps.Where(Function(x) descriptor.CanSpawnMap(x))
-            For Each dummy In Enumerable.Range(0, descriptor.ItemCount)
-                Dim map = RNG.FromEnumerable(candidateMaps)
-                Dim candidateLocations = map.Locations.Where(Function(x) descriptor.CanSpawnLocation(x))
-                CreateItem(itemType, RNG.FromEnumerable(candidateLocations))
             Next
         Next
     End Sub
@@ -107,47 +83,15 @@ Public Class World
         Data.Messages.Clear()
     End Sub
 
-    Private Sub CreateCharacters()
-        For Each characterType In CharacterTypes.All
-            Dim descriptor = characterType.ToCharacterTypeDescriptor
-            Dim candidateMaps = Maps.Where(Function(x) descriptor.CanSpawnMap(x))
-            For Each dummy In Enumerable.Range(0, descriptor.CharacterCount)
-                Dim map = RNG.FromEnumerable(candidateMaps)
-                Dim candidateLocations = map.Locations.Where(Function(x) descriptor.CanSpawnLocation(x))
-                CreateCharacter(characterType, RNG.FromEnumerable(candidateLocations))
-            Next
-        Next
-    End Sub
-
-    Private Sub CreateMaps()
-        For Each mapType In MapTypes.All
-            Dim descriptor = mapType.ToMapTypeDescriptor
-            For Each dummy In Enumerable.Range(0, descriptor.MapCount)
-                CreateMap(mapType)
-            Next
-        Next
-    End Sub
-
-    Public Function CreateMap(mapType As String) As IMap Implements IWorld.CreateMap
-        Dim mapId = Data.Maps.Count
-        Data.Maps.Add(New MapData With {.MapType = mapType})
-        Dim result = New Map(Data, mapId, AddressOf PlaySfx)
-        result.Initialize()
-        Return result
-    End Function
-
-    Public Function CreateLocation(locationType As String, map As IMap, column As Integer, row As Integer) As ILocation Implements IWorld.CreateLocation
+    Public Function CreateLocation(locationType As String) As ILocation Implements IWorld.CreateLocation
         Dim locationId = Data.Locations.Count
         Data.Locations.Add(New LocationData With {
-                            .LocationType = locationType,
-                            .MapId = map.MapId,
-                            .Column = column,
-                            .Row = row})
+                            .LocationType = locationType
+                           })
         Dim result = New Location(
             Data,
             locationId,
             AddressOf PlaySfx)
-        map.SetLocation(column, row, result)
         result.Initialize()
         Return result
     End Function
@@ -181,10 +125,6 @@ Public Class World
         result.Initialize()
         entity.AddItem(result)
         Return result
-    End Function
-
-    Public Function GetMap(mapId As Integer) As IMap Implements IWorld.GetMap
-        Return New Map(Data, mapId, AddressOf PlaySfx)
     End Function
 
     Public Function GetLocation(locationId As Integer) As ILocation Implements IWorld.GetLocation

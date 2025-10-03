@@ -24,24 +24,6 @@ Friend Class Character
         End Get
     End Property
 
-    Public ReadOnly Property Map As IMap Implements ICharacter.Map
-        Get
-            Return Location.Map
-        End Get
-    End Property
-
-    Public ReadOnly Property Column As Integer Implements ICharacter.Column
-        Get
-            Return Location.Column
-        End Get
-    End Property
-
-    Public ReadOnly Property Row As Integer Implements ICharacter.Row
-        Get
-            Return Location.Row
-        End Get
-    End Property
-
     Protected Overrides ReadOnly Property EntityData As CharacterData
         Get
             Return Data.Characters(CharacterId)

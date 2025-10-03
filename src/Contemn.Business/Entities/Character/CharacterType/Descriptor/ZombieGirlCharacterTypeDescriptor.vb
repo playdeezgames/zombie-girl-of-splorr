@@ -18,10 +18,6 @@ Friend Class ZombieGirlCharacterTypeDescriptor
         Return result
     End Function
 
-    Friend Overrides Function CanSpawnMap(map As IMap) As Boolean
-        Return True
-    End Function
-
     Friend Overrides Function CanSpawnLocation(location As ILocation) As Boolean
         Return Not location.HasCharacter AndAlso location.LocationType = NameOf(DirtLocationTypeDescriptor)
     End Function

@@ -7,7 +7,6 @@ Friend MustInherit Class CharacterTypeDescriptor
         Me.CharacterType = characterType
         Me.CharacterCount = characterCount
     End Sub
-    Friend MustOverride Function CanSpawnMap(map As IMap) As Boolean
     Friend MustOverride Function CanSpawnLocation(location As ILocation) As Boolean
     Friend MustOverride Sub OnInitialize(character As ICharacter)
     Friend MustOverride Sub HandleAddItem(character As ICharacter, item As IItem)
