@@ -26,6 +26,24 @@ Public Class Faction
         End Get
     End Property
 
+    Public ReadOnly Property HasCharacters As Boolean Implements IFaction.HasCharacters
+        Get
+            Return EntityData.CharacterIds.Any
+        End Get
+    End Property
+
+    Public ReadOnly Property CharacterCount As Integer Implements IFaction.CharacterCount
+        Get
+            Return EntityData.CharacterIds.Count
+        End Get
+    End Property
+
+    Public ReadOnly Property Characters As IEnumerable(Of ICharacter) Implements IFaction.Characters
+        Get
+            Return EntityData.CharacterIds.Select(Function(x) World.GetCharacter(x))
+        End Get
+    End Property
+
     Protected Overrides ReadOnly Property EntityData As FactionData
         Get
             Return Data.Factions(FactionId)

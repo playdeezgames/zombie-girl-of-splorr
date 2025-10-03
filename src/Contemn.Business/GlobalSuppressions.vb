@@ -5,5 +5,4 @@
 
 Imports System.Diagnostics.CodeAnalysis
 
-<Assembly: SuppressMessage("Performance", "CA1859:Use concrete types when possible for improved performance", Justification:="<Pending>", Scope:="member", Target:="~F:Contemn.Business.DismantleVerbTypeDescriptor.dismantleTable")>
-<Assembly: SuppressMessage("Performance", "CA1860:Avoid using 'Enumerable.Any()' extension method", Justification:="<Pending>", Scope:="member", Target:="~M:Contemn.Business.World.CreateItem(System.String,Contemn.Business.IInventoryEntity)~Contemn.Business.IItem")>
+<Assembly: SuppressMessage("Performance", "CA1860:Avoid using 'Enumerable.Any()' extension method")>

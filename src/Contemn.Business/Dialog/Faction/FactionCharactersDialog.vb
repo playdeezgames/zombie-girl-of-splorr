@@ -1,6 +1,6 @@
 ﻿Imports TGGD.Business
 
-Friend Class FactionDialog
+Friend Class FactionCharactersDialog
     Inherits BaseDialog
 
     Private ReadOnly faction As IFaction
@@ -18,25 +18,34 @@ Friend Class FactionDialog
     End Function
 
     Private Shared Function GenerateChoices(faction As IFaction) As IEnumerable(Of IDialogChoice)
-        Return {
-            New DialogChoice(GAME_MENU_CHOICE, GAME_MENU_TEXT)
+        Dim result As New List(Of IDialogChoice) From
+            {
+                New DialogChoice(NEVER_MIND_CHOICE, NEVER_MIND_TEXT)
             }
+        For Each character In faction.Characters
+            result.Add(New DialogChoice(character.CharacterId.ToString, character.Name))
+        Next
+        Return result
     End Function
 
     Private Shared Function GenerateCaption(faction As IFaction) As String
-        Return $"Faction: {faction.Name}"
+        Return $"{faction.Name} Characters:"
     End Function
 
     Public Overrides Function Choose(choice As String) As IDialog
         Select Case choice
-            Case GAME_MENU_CHOICE
-                Return New GameMenuDialog(faction.World)
+            Case NEVER_MIND_CHOICE
+                Return CancelDialog()
             Case Else
-                Throw New NotImplementedException
+                Return ChooseCharacter(CInt(choice))
         End Select
     End Function
 
+    Private Function ChooseCharacter(characterId As Integer) As IDialog
+        Return New CharacterDialog(faction.World.GetCharacter(characterId))
+    End Function
+
     Public Overrides Function CancelDialog() As IDialog
-        Return Me
+        Return New FactionDialog(faction)
     End Function
 End Class

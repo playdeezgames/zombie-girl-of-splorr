@@ -24,19 +24,16 @@ Friend Class CharacterDialog
         Return {
             New DialogChoice(FACTION_CHOICE, $"Faction: {character.Faction.Name}"),
             New DialogChoice(MOVE_CHOICE, MOVE_TEXT),
-            New DialogChoice(ACTIONS_CHOICE, ACTIONS_TEXT),
-            New DialogChoice(GAME_MENU_CHOICE, GAME_MENU_TEXT)
+            New DialogChoice(ACTIONS_CHOICE, ACTIONS_TEXT)
             }
     End Function
 
     Public Overrides Function Choose(choice As String) As IDialog
         Select Case choice
             Case FACTION_CHOICE
-                Return New FactionDialog(character.Faction)
+                Return CancelDialog()
             Case ACTIONS_CHOICE
                 Return New VerbListDialog(character, VerbCategoryType.Action, ACTIONS_TEXT)
-            Case GAME_MENU_CHOICE
-                Return CancelDialog()
             Case MOVE_CHOICE
                 Return New VerbListDialog(character, VerbCategoryType.Move, MOVE_TEXT)
             Case Else
@@ -45,6 +42,6 @@ Friend Class CharacterDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New GameMenuDialog(character.World)
+        Return New FactionDialog(character.Faction)
     End Function
 End Class
