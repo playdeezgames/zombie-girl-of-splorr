@@ -30,7 +30,7 @@ Friend Class FactionDialog
     Public Overrides Function Choose(choice As String) As IDialog
         Select Case choice
             Case GAME_MENU_CHOICE
-                Return New GameMenuDialog(faction.World.Avatar)
+                Return New GameMenuDialog(faction.World)
             Case Else
                 Throw New NotImplementedException
         End Select

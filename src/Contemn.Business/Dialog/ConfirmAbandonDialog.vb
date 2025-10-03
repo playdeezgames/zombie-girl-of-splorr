@@ -4,11 +4,11 @@ Friend Class ConfirmAbandonDialog
     Inherits BaseDialog
     Private Shared ReadOnly NO_CHOICE As String = NameOf(NO_CHOICE)
     Private Shared ReadOnly YES_CHOICE As String = NameOf(YES_CHOICE)
-    Private ReadOnly character As ICharacter
+    Private ReadOnly world As IWorld
     Const NO_TEXT = "No"
     Const YES_TEXT = "Yes"
 
-    Public Sub New(character As ICharacter)
+    Public Sub New(world As IWorld)
         MyBase.New(
             "Are you sure you want to abandon?",
             {
@@ -16,7 +16,7 @@ Friend Class ConfirmAbandonDialog
                 New DialogChoice(YES_CHOICE, YES_TEXT)
             },
             Array.Empty(Of IDialogLine))
-        Me.character = character
+        Me.world = world
     End Sub
 
     Public Overrides Function Choose(choice As String) As IDialog
@@ -24,7 +24,7 @@ Friend Class ConfirmAbandonDialog
             Case NO_CHOICE
                 Return CancelDialog()
             Case YES_CHOICE
-                character.World.Clear()
+                world.Clear()
                 Return Nothing
             Case Else
                 Throw New NotImplementedException
@@ -32,6 +32,6 @@ Friend Class ConfirmAbandonDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New GameMenuDialog(character)
+        Return New GameMenuDialog(world)
     End Function
 End Class
