@@ -63,17 +63,13 @@ Friend Class Character
             Return Nothing
         End Get
         Set(value As IFaction)
-            If Faction IsNot Nothing Then
-                Faction.RemoveCharacter(Me)
-            End If
+            Faction?.RemoveCharacter(Me)
             If value IsNot Nothing Then
                 SetStatistic(StatisticType.FactionId, value.FactionId)
             Else
                 SetStatistic(StatisticType.FactionId, Nothing)
             End If
-            If Faction IsNot Nothing Then
-                Faction.AddCharacter(Me)
-            End If
+            Faction?.AddCharacter(Me)
         End Set
     End Property
 
@@ -95,45 +91,6 @@ Friend Class Character
 
     Public Function Perform(verbType As String) As IDialog Implements ICharacter.Perform
         Return verbType.ToVerbTypeDescriptor.Perform(Me)
-    End Function
-
-    Public Function MoveTo(destination As ILocation) As IDialog Implements ICharacter.MoveTo
-        If destination Is Nothing Then
-            Leave()
-            Return Nothing
-        End If
-        If CanEnter(destination) Then
-            Return Enter(destination)
-        End If
-        Return Bump(destination)
-    End Function
-
-    Private Function Bump(nextLocation As ILocation) As IDialog
-        Return HandleBump(nextLocation)
-    End Function
-
-    Private Function HandleBump(nextLocation As ILocation) As IDialog
-        SetBumpLocation(nextLocation)
-        Return nextLocation.LocationType.ToLocationTypeDescriptor.OnBump(nextLocation, Me)
-    End Function
-
-    Private Function Enter(nextLocation As ILocation) As IDialog
-        Leave()
-        EntityData.LocationId = nextLocation.LocationId
-        Data.Locations(EntityData.LocationId).CharacterId = CharacterId
-        Me.HandleEnter(Location)
-        Return Location.HandleEnter(Me)
-    End Function
-
-    Private Sub Leave()
-        SetBumpLocation(Nothing)
-        Me.HandleLeave(Location)
-        Location.HandleLeave(Me)
-        Data.Locations(EntityData.LocationId).CharacterId = Nothing
-    End Sub
-
-    Private Function CanEnter(nextLocation As ILocation) As Boolean
-        Return Not nextLocation.HasCharacter AndAlso nextLocation.LocationType.ToLocationTypeDescriptor.CanEnter(nextLocation, Me)
     End Function
 
     Public Overrides Sub Recycle()

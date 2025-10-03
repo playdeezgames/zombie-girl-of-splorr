@@ -13,29 +13,10 @@ Friend Class ZombieGirlCharacterTypeDescriptor
         character.SetMetadata(MetadataType.Name, "Fumiko Fujimoto")
     End Sub
 
-    Friend Overrides Function OnBump(character As ICharacter, location As ILocation) As IDialog
-        Return location.HandleBump(character)
-    End Function
-
-    Friend Overrides Sub OnEnter(character As ICharacter, location As ILocation)
-        For Each line In character.World.ProcessTurn()
-            character.World.AddMessage(line.Mood, line.Text)
-        Next
-        Dim items = location.Items
-        For Each item In items
-            location.RemoveItem(item)
-            character.World.AddMessage(MoodType.Info, $"You pick up {item.Name}.")
-            character.AddItem(item)
-        Next
-    End Sub
-
     Friend Overrides Function OnProcessTurn(character As ICharacter) As IEnumerable(Of IDialogLine)
         Dim result As New List(Of IDialogLine)
         Return result
     End Function
-
-    Friend Overrides Sub OnLeave(character As ICharacter, location As ILocation)
-    End Sub
 
     Friend Overrides Function CanSpawnMap(map As IMap) As Boolean
         Return True

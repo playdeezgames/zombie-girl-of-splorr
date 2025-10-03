@@ -11,5 +11,4 @@ Public Interface ILocation
     ReadOnly Property Character As ICharacter
     ReadOnly Property Name As String
     Sub ProcessTurn()
-    Function GenerateBumpLines(character As ICharacter) As IEnumerable(Of IDialogLine)
 End Interface
