@@ -5,7 +5,7 @@ Public Interface IWorld
     Inherits IEntity
     Function CreateLocation(locationType As String) As ILocation
     Function GetLocation(locationId As Integer) As ILocation
-    Function CreateCharacter(characterType As String, location As ILocation) As ICharacter
+    Function CreateCharacter(characterType As String, location As ILocation, faction As IFaction) As ICharacter
     Function GetCharacter(characterId As Integer) As ICharacter
     Function CreateItem(itemType As String, entity As IInventoryEntity) As IItem
     Function GetItem(itemId As Integer) As IItem

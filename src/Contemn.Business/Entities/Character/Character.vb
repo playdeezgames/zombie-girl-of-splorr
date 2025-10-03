@@ -38,20 +38,12 @@ Friend Class Character
 
     Public Property Faction As IFaction Implements ICharacter.Faction
         Get
-            Dim factionId As Integer? = TryGetStatistic(StatisticType.FactionId)
-            If factionId.HasValue Then
-                Return New Faction(Data, factionId.Value, AddressOf PlaySfx)
-            End If
-            Return Nothing
+            Return World.GetFaction(EntityData.FactionId)
         End Get
         Set(value As IFaction)
-            Faction?.RemoveCharacter(Me)
-            If value IsNot Nothing Then
-                SetStatistic(StatisticType.FactionId, value.FactionId)
-            Else
-                SetStatistic(StatisticType.FactionId, Nothing)
-            End If
-            Faction?.AddCharacter(Me)
+            Faction.RemoveCharacter(Me)
+            EntityData.FactionId = value.FactionId
+            Faction.AddCharacter(Me)
         End Set
     End Property
 

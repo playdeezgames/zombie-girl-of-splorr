@@ -8,8 +8,6 @@ Friend Class ZombieGirlCharacterTypeDescriptor
     End Sub
 
     Friend Overrides Sub OnInitialize(character As ICharacter)
-        character.Faction = character.World.Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
-        character.World.Avatar = character
         character.SetMetadata(MetadataType.Name, "Fumiko Fujimoto")
     End Sub
 

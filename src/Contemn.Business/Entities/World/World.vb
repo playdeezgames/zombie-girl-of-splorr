@@ -65,7 +65,11 @@ Public Class World
     Public Overrides Sub Initialize()
         MyBase.Initialize()
         CreateFactions()
-        CreateCharacter(NameOf(ZombieGirlCharacterTypeDescriptor), CreateLocation(NameOf(GraveLocationTypeDescriptor)))
+        Dim avatarFaction = Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
+        Avatar = CreateCharacter(
+            NameOf(ZombieGirlCharacterTypeDescriptor),
+            CreateLocation(NameOf(GraveLocationTypeDescriptor)),
+            avatarFaction)
     End Sub
 
     Private Sub CreateFactions()
@@ -98,16 +102,21 @@ Public Class World
         Return result
     End Function
 
-    Public Function CreateCharacter(characterType As String, location As ILocation) As ICharacter Implements IWorld.CreateCharacter
+    Public Function CreateCharacter(
+                                   characterType As String,
+                                   location As ILocation,
+                                   faction As IFaction) As ICharacter Implements IWorld.CreateCharacter
         Dim characterId = Data.Characters.Count
         Data.Characters.Add(New CharacterData With {
                             .CharacterType = characterType,
-                            .LocationId = location.LocationId})
-        Dim result = New Character(
+                            .LocationId = location.LocationId,
+                            .FactionId = faction.FactionId})
+        Dim result As ICharacter = New Character(
             Data,
             characterId,
             AddressOf PlaySfx)
         result.Initialize()
+        faction.AddCharacter(result)
         Return result
     End Function
 
