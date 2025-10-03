@@ -3,10 +3,8 @@
 Friend Class CharacterDialog
     Inherits BaseDialog
     Private Shared ReadOnly ACTIONS_CHOICE As String = NameOf(ACTIONS_CHOICE)
-    Private Shared ReadOnly MOVE_CHOICE As String = NameOf(MOVE_CHOICE)
     Private Shared ReadOnly FACTION_CHOICE As String = NameOf(FACTION_CHOICE)
     Const ACTIONS_TEXT = "Actions..."
-    Const MOVE_TEXT = "Move..."
     Private ReadOnly character As ICharacter
 
     Public Sub New(character As ICharacter)
@@ -23,7 +21,6 @@ Friend Class CharacterDialog
     Private Shared Function GenerateChoices(character As ICharacter) As IEnumerable(Of IDialogChoice)
         Return {
             New DialogChoice(FACTION_CHOICE, $"Faction: {character.Faction.Name}"),
-            New DialogChoice(MOVE_CHOICE, MOVE_TEXT),
             New DialogChoice(ACTIONS_CHOICE, ACTIONS_TEXT)
             }
     End Function
@@ -33,9 +30,7 @@ Friend Class CharacterDialog
             Case FACTION_CHOICE
                 Return CancelDialog()
             Case ACTIONS_CHOICE
-                Return New VerbListDialog(character, VerbCategoryType.Action, ACTIONS_TEXT)
-            Case MOVE_CHOICE
-                Return New VerbListDialog(character, VerbCategoryType.Move, MOVE_TEXT)
+                Return New CharacterActionsDialog(character, VerbCategoryType.Action, ACTIONS_TEXT)
             Case Else
                 Throw New NotImplementedException
         End Select

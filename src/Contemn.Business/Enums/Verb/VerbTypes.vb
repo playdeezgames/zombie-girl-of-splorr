@@ -4,10 +4,6 @@ Friend Module VerbTypes
     Private Function GenerateDescriptors() As IList(Of VerbTypeDescriptor)
         Dim result = New List(Of VerbTypeDescriptor) From
         {
-            New MoveNorthVerbTypeDescriptor(),
-            New MoveEastVerbTypeDescriptor(),
-            New MoveSouthVerbTypeDescriptor(),
-            New MoveWestVerbTypeDescriptor()
         }
         Return result
     End Function

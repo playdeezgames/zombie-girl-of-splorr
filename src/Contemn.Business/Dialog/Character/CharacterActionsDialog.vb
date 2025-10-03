@@ -1,6 +1,6 @@
 ﻿Imports TGGD.Business
 
-Public Class VerbListDialog
+Public Class CharacterActionsDialog
     Inherits BaseDialog
 
     Private ReadOnly character As ICharacter
@@ -13,7 +13,7 @@ Public Class VerbListDialog
     End Sub
 
     Public Shared Function LaunchMenu(character As ICharacter) As Func(Of IDialog)
-        Return Function() New VerbListDialog(character, VerbCategoryType.Action, "Actions...")
+        Return Function() New CharacterActionsDialog(character, VerbCategoryType.Action, "Actions...")
     End Function
 
     Private Shared Function GenerateChoices(character As ICharacter, verbCategoryType As String) As IEnumerable(Of IDialogChoice)
@@ -36,6 +36,6 @@ Public Class VerbListDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return Nothing
+        Return New CharacterDialog(character)
     End Function
 End Class
