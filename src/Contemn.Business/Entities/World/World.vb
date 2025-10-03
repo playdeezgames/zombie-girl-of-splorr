@@ -59,11 +59,13 @@ Public Class World
         Data.Generators.Clear()
         Data.AvatarCharacterId = Nothing
         Data.ActiveLocations.Clear()
+        Data.Factions.Clear()
+        Data.RecycledFactions.Clear()
     End Sub
     Public Overrides Sub Initialize()
         MyBase.Initialize()
         CreateFactions()
-        CreateCharacter(NameOf(ZombieGirlCharacterTypeDescriptor), CreateLocation(NameOf(DirtLocationTypeDescriptor)))
+        CreateCharacter(NameOf(ZombieGirlCharacterTypeDescriptor), CreateLocation(NameOf(GraveLocationTypeDescriptor)))
     End Sub
 
     Private Sub CreateFactions()

@@ -7,12 +7,9 @@ Friend MustInherit Class LocationTypeDescriptor
         Me.LocationType = locationType
         Me.LocationTypeName = locationTypeName
     End Sub
-
-    Friend MustOverride Function CanSpawn(location As ILocation, itemType As String) As Boolean
     Friend MustOverride Sub OnInitialize(location As Location)
     Friend Overridable Function GetName(location As Location) As String
         Return LocationTypeName
     End Function
-
     Friend MustOverride Sub OnProcessTurn(location As Location)
 End Class
