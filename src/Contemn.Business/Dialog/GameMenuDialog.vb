@@ -32,6 +32,6 @@ Friend Class GameMenuDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New NavigationDialog(character)
+        Return New CharacterDialog(character)
     End Function
 End Class

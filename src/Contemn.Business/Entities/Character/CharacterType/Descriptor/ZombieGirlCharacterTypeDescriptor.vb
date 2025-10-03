@@ -58,7 +58,7 @@ Friend Class ZombieGirlCharacterTypeDescriptor
     End Function
 
     Friend Overrides Function OnNavigate(character As Character) As IDialog
-        Return New NavigationDialog(character)
+        Return New CharacterDialog(character)
     End Function
 
     Friend Overrides Function GetName(character As Character) As String
