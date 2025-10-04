@@ -4,7 +4,8 @@ Friend Module FactionTypes
     Friend ReadOnly Descriptors As IReadOnlyDictionary(Of String, FactionTypeDescriptor) =
         New List(Of FactionTypeDescriptor) From
         {
-            New ZombieGirlFactionTypeDescriptor()
+            New ZombieGirlFactionTypeDescriptor(),
+            New CuteBoysFactionTypeDescriptor()
         }.ToDictionary(Function(x) x.FactionType, Function(x) x)
     Friend ReadOnly Property All As IEnumerable(Of String)
         Get

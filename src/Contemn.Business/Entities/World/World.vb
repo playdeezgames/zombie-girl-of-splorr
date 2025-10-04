@@ -72,10 +72,15 @@ Public Class World
         MyBase.Initialize()
         CreateFactions()
         PlayerFaction = Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
+        Dim cemetery = CreateLocation(NameOf(CemeteryLocationTypeDescriptor))
         CreateCharacter(
             NameOf(ZombieGirlCharacterTypeDescriptor),
-            CreateLocation(NameOf(CemeteryLocationTypeDescriptor)),
+            cemetery,
             PlayerFaction)
+        CreateCharacter(
+            NameOf(CuteBoyCharacterTypeDescriptor),
+            cemetery,
+            Factions.Single(Function(x) x.FactionType = NameOf(CuteBoysFactionTypeDescriptor)))
     End Sub
 
     Private Sub CreateFactions()
