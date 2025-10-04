@@ -74,7 +74,7 @@ Public Class World
         PlayerFaction = Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
         CreateCharacter(
             NameOf(ZombieGirlCharacterTypeDescriptor),
-            CreateLocation(NameOf(GraveLocationTypeDescriptor)),
+            CreateLocation(NameOf(CemeteryLocationTypeDescriptor)),
             PlayerFaction)
     End Sub
 

@@ -1,10 +1,10 @@
 ﻿Imports TGGD.Business
 
-Friend Class GraveLocationTypeDescriptor
+Friend Class CemeteryLocationTypeDescriptor
     Inherits LocationTypeDescriptor
 
     Public Sub New()
-        MyBase.New(NameOf(GraveLocationTypeDescriptor), "Grave")
+        MyBase.New(NameOf(CemeteryLocationTypeDescriptor), "Cemetery")
     End Sub
 
     Friend Overrides Sub OnInitialize(location As Location)
