@@ -59,6 +59,12 @@ Friend Class Character
         End Get
     End Property
 
+    Public ReadOnly Property OtherCharactersInLocation As IEnumerable(Of ICharacter) Implements ICharacter.OtherCharactersInLocation
+        Get
+            Return Location.Characters.Where(Function(x) x.CharacterId <> CharacterId)
+        End Get
+    End Property
+
     Private Function CanPerform(verbType As String) As Boolean
         Return verbType.ToVerbTypeDescriptor.CanChoose(Me)
     End Function

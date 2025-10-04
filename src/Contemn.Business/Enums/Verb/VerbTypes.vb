@@ -4,6 +4,7 @@ Friend Module VerbTypes
     Private Function GenerateDescriptors() As IList(Of VerbTypeDescriptor)
         Dim result = New List(Of VerbTypeDescriptor) From
         {
+            New EatBrainsVerbTypeDescriptor()
         }
         Return result
     End Function

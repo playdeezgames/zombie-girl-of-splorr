@@ -9,6 +9,7 @@ Friend Class CuteBoyCharacterTypeDescriptor
 
     Friend Overrides Sub OnInitialize(character As ICharacter)
         character.SetMetadata(MetadataType.Name, "Ryu Shigeru")
+        character.SetTag(TagType.HasTastyBrains, True)
     End Sub
 
     Friend Overrides Sub HandleAddItem(character As ICharacter, item As IItem)
@@ -31,9 +32,5 @@ Friend Class CuteBoyCharacterTypeDescriptor
 
     Friend Overrides Function GetName(character As Character) As String
         Return character.GetMetadata(MetadataType.Name)
-    End Function
-
-    Friend Overrides Function Describe(character As Character) As IEnumerable(Of IDialogLine)
-        Return Array.Empty(Of IDialogLine)
     End Function
 End Class

@@ -22,10 +22,15 @@ Friend Class FactionDialog
 
     Private Shared Function GenerateChoices(faction As IFaction) As IEnumerable(Of IDialogChoice)
         Dim result As New List(Of IDialogChoice)
+        If Not faction.IsPlayerFaction Then
+            result.Add(New DialogChoice(NEVER_MIND_CHOICE, NEVER_MIND_TEXT))
+        End If
         If faction.HasCharacters Then
             result.Add(New DialogChoice(CHARACTERS_CHOICE, CHARACTERS_TEXT))
         End If
-        result.Add(New DialogChoice(GAME_MENU_CHOICE, GAME_MENU_TEXT))
+        If faction.IsPlayerFaction Then
+            result.Add(New DialogChoice(GAME_MENU_CHOICE, GAME_MENU_TEXT))
+        End If
         Return result
     End Function
 
@@ -35,6 +40,8 @@ Friend Class FactionDialog
 
     Public Overrides Function Choose(choice As String) As IDialog
         Select Case choice
+            Case NEVER_MIND_CHOICE
+                Return CancelDialog()
             Case GAME_MENU_CHOICE
                 Return CancelDialog()
             Case CHARACTERS_CHOICE
@@ -45,6 +52,9 @@ Friend Class FactionDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New GameMenuDialog(faction.World, Function() Me)
+        Return If(
+                faction.IsPlayerFaction,
+                CType(New GameMenuDialog(faction.World, Function() Me), IDialog),
+                New FactionDialog(faction.World.PlayerFaction))
     End Function
 End Class

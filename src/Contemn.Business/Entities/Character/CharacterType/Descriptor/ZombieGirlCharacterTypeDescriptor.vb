@@ -9,6 +9,7 @@ Friend Class ZombieGirlCharacterTypeDescriptor
 
     Friend Overrides Sub OnInitialize(character As ICharacter)
         character.SetMetadata(MetadataType.Name, "Fumiko Fujimoto")
+        character.SetTag(TagType.IsZombie, True)
     End Sub
 
     Friend Overrides Function OnProcessTurn(character As ICharacter) As IEnumerable(Of IDialogLine)
@@ -39,6 +40,8 @@ Friend Class ZombieGirlCharacterTypeDescriptor
     Friend Overrides Function Describe(character As Character) As IEnumerable(Of IDialogLine)
         Dim result = character.World.Messages.Select(Function(x) New DialogLine(x.Mood, x.Text)).ToList
         character.World.DismissMessages()
-        Return result
+        Return MyBase.
+            Describe(character).
+            Concat(result)
     End Function
 End Class

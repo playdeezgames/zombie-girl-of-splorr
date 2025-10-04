@@ -12,4 +12,5 @@ Public Interface ICharacter
     Function ProcessTurn() As IEnumerable(Of IDialogLine)
     Property Faction As IFaction
     ReadOnly Property Name As String
+    ReadOnly Property OtherCharactersInLocation As IEnumerable(Of ICharacter)
 End Interface
