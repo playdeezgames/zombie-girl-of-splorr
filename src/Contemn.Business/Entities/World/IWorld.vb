@@ -9,7 +9,7 @@ Public Interface IWorld
     Function GetCharacter(characterId As Integer) As ICharacter
     Function CreateItem(itemType As String, entity As IInventoryEntity) As IItem
     Function GetItem(itemId As Integer) As IItem
-    Property Avatar As ICharacter
+    Property PlayerFaction As IFaction
     Sub AddMessage(mood As String, text As String)
     Sub DismissMessages()
     ReadOnly Property Messages As IEnumerable(Of IMessage)

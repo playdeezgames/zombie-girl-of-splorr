@@ -32,10 +32,6 @@ Friend Class ZombieGirlCharacterTypeDescriptor
         Throw New NotImplementedException()
     End Function
 
-    Friend Overrides Function OnNavigate(character As Character) As IDialog
-        Return New FactionDialog(character.Faction)
-    End Function
-
     Friend Overrides Function GetName(character As Character) As String
         Return character.GetMetadata(MetadataType.Name)
     End Function

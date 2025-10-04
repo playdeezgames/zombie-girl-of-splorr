@@ -1,4 +1,5 @@
 ﻿Imports Contemn.Data
+Imports TGGD.Business
 
 Public Class Faction
     Inherits Entity(Of FactionData)
@@ -62,4 +63,8 @@ Public Class Faction
     Public Sub RemoveCharacter(character As ICharacter) Implements IFaction.RemoveCharacter
         EntityData.CharacterIds.Remove(character.CharacterId)
     End Sub
+
+    Public Function Navigate() As IDialog Implements IFaction.Navigate
+        Return New FactionDialog(Me)
+    End Function
 End Class

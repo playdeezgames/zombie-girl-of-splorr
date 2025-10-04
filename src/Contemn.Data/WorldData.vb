@@ -4,7 +4,7 @@ Public Class WorldData
     Property RecycledLocations As New HashSet(Of Integer)
     Property Characters As New List(Of CharacterData)
     Property RecycledCharacters As New HashSet(Of Integer)
-    Property AvatarCharacterId As Integer?
+    Property PlayerFactionId As Integer?
     Property Messages As New List(Of MessageData)
     Property Items As New List(Of ItemData)
     Property RecycledItems As New HashSet(Of Integer)

@@ -10,7 +10,6 @@ Public Interface ICharacter
     Function AvailableVerbsOfCategory(verbCategoryType As String) As IEnumerable(Of String)
     Function Interact(initiator As ICharacter) As IDialog
     Function ProcessTurn() As IEnumerable(Of IDialogLine)
-    Function Navigate() As IDialog
     Property Faction As IFaction
     ReadOnly Property Name As String
 End Interface

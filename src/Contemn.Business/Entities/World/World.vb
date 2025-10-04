@@ -9,18 +9,6 @@ Public Class World
         MyBase.New(data, playSfx)
     End Sub
 
-    Public Property Avatar As ICharacter Implements IWorld.Avatar
-        Get
-            Return If(
-                Data.AvatarCharacterId.HasValue,
-                New Character(Data, Data.AvatarCharacterId.Value, AddressOf PlaySfx),
-                Nothing)
-        End Get
-        Set(value As ICharacter)
-            Data.AvatarCharacterId = value?.CharacterId
-        End Set
-    End Property
-
     Protected Overrides ReadOnly Property EntityData As WorldData
         Get
             Return Data
@@ -47,6 +35,18 @@ Public Class World
         End Get
     End Property
 
+    Public Property PlayerFaction As IFaction Implements IWorld.PlayerFaction
+        Get
+            Return If(
+                Data.PlayerFactionId.HasValue,
+                GetFaction(Data.PlayerFactionId.Value),
+                Nothing)
+        End Get
+        Set(value As IFaction)
+            Data.PlayerFactionId = value?.FactionId
+        End Set
+    End Property
+
     Public Overrides Sub Clear()
         MyBase.Clear()
         Data.Locations.Clear()
@@ -57,7 +57,7 @@ Public Class World
         Data.Items.Clear()
         Data.RecycledItems.Clear()
         Data.Generators.Clear()
-        Data.AvatarCharacterId = Nothing
+        Data.PlayerFactionId = Nothing
         Data.ActiveLocations.Clear()
         Data.Factions.Clear()
         Data.RecycledFactions.Clear()
@@ -65,11 +65,11 @@ Public Class World
     Public Overrides Sub Initialize()
         MyBase.Initialize()
         CreateFactions()
-        Dim avatarFaction = Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
-        Avatar = CreateCharacter(
+        PlayerFaction = Factions.Single(Function(x) x.FactionType = NameOf(ZombieGirlFactionTypeDescriptor))
+        CreateCharacter(
             NameOf(ZombieGirlCharacterTypeDescriptor),
             CreateLocation(NameOf(GraveLocationTypeDescriptor)),
-            avatarFaction)
+            PlayerFaction)
     End Sub
 
     Private Sub CreateFactions()
@@ -176,7 +176,6 @@ Public Class World
             location.ProcessTurn()
         Next
         Dim result As New List(Of IDialogLine)
-        result.AddRange(Avatar.ProcessTurn())
         Return result
     End Function
 

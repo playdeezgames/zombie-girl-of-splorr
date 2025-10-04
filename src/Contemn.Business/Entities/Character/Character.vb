@@ -98,8 +98,4 @@ Friend Class Character
         EntityData.LocationId = 0
         EntityData.CharacterType = Nothing
     End Sub
-
-    Public Function Navigate() As IDialog Implements ICharacter.Navigate
-        Return CharacterType.ToCharacterTypeDescriptor.OnNavigate(Me)
-    End Function
 End Class
