@@ -17,7 +17,7 @@ Friend Class ZombieGirlCharacterTypeDescriptor
     End Function
 
     Friend Overrides Function CanSpawnLocation(location As ILocation) As Boolean
-        Return Not location.HasCharacter AndAlso location.LocationType = NameOf(GraveLocationTypeDescriptor)
+        Return Not location.HasCharacters AndAlso location.LocationType = NameOf(GraveLocationTypeDescriptor)
     End Function
 
     Friend Overrides Sub HandleAddItem(character As ICharacter, item As IItem)

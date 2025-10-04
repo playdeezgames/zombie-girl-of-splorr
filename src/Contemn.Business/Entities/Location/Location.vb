@@ -1,5 +1,4 @@
 ﻿Imports Contemn.Data
-Imports TGGD.Business
 
 Friend Class Location
     Inherits InventoryEntity(Of LocationData)
@@ -38,19 +37,13 @@ Friend Class Location
     Public Overrides Sub Clear()
         MyBase.Clear()
         EntityData.LocationType = Nothing
-        EntityData.CharacterId = Nothing
+        EntityData.CharacterIds.Clear()
         World.DeactivateLocation(Me)
     End Sub
 
-    Public ReadOnly Property HasCharacter As Boolean Implements ILocation.HasCharacter
+    Public ReadOnly Property HasCharacters As Boolean Implements ILocation.HasCharacters
         Get
-            Return EntityData.CharacterId.HasValue
-        End Get
-    End Property
-
-    Public ReadOnly Property Character As ICharacter Implements ILocation.Character
-        Get
-            Return If(HasCharacter, World.GetCharacter(EntityData.CharacterId.Value), Nothing)
+            Return EntityData.CharacterIds.Any
         End Get
     End Property
 
@@ -63,6 +56,18 @@ Friend Class Location
     Public ReadOnly Property Name As String Implements ILocation.Name
         Get
             Return LocationType.ToLocationTypeDescriptor.GetName(Me)
+        End Get
+    End Property
+
+    Public ReadOnly Property CharacterCount As Integer Implements ILocation.CharacterCount
+        Get
+            Return EntityData.CharacterIds.Count
+        End Get
+    End Property
+
+    Public ReadOnly Property Characters As IEnumerable(Of ICharacter) Implements ILocation.Characters
+        Get
+            Return EntityData.CharacterIds.Select(Function(x) World.GetCharacter(x))
         End Get
     End Property
 

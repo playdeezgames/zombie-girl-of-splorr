@@ -45,6 +45,12 @@ Public Class Faction
         End Get
     End Property
 
+    Public ReadOnly Property IsPlayerFaction As Boolean Implements IFaction.IsPlayerFaction
+        Get
+            Return Data.PlayerFactionId.HasValue AndAlso Data.PlayerFactionId.Value = FactionId
+        End Get
+    End Property
+
     Protected Overrides ReadOnly Property EntityData As FactionData
         Get
             Return Data.Factions(FactionId)

@@ -59,7 +59,7 @@ Friend Class Character
 
     Public Overrides Sub Initialize()
         MyBase.Initialize()
-        Data.Locations(EntityData.LocationId).CharacterId = CharacterId
+        Data.Locations(EntityData.LocationId).CharacterIds.Add(CharacterId)
         CharacterType.ToCharacterTypeDescriptor().OnInitialize(Me)
     End Sub
 

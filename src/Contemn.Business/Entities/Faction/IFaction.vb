@@ -11,4 +11,5 @@ Public Interface IFaction
     ReadOnly Property CharacterCount As Integer
     ReadOnly Property Characters As IEnumerable(Of ICharacter)
     Function Navigate() As IDialog
+    ReadOnly Property IsPlayerFaction As Boolean
 End Interface
