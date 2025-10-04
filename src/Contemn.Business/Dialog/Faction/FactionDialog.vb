@@ -4,6 +4,7 @@ Friend Class FactionDialog
     Inherits BaseDialog
 
     Private Shared ReadOnly CHARACTERS_CHOICE As String = NameOf(CHARACTERS_CHOICE)
+    Const CHARACTERS_TEXT = "Characters..."
 
     Private ReadOnly faction As IFaction
 
@@ -22,7 +23,7 @@ Friend Class FactionDialog
     Private Shared Function GenerateChoices(faction As IFaction) As IEnumerable(Of IDialogChoice)
         Dim result As New List(Of IDialogChoice)
         If faction.HasCharacters Then
-            result.Add(New DialogChoice(CHARACTERS_CHOICE, $"Characters({faction.CharacterCount})"))
+            result.Add(New DialogChoice(CHARACTERS_CHOICE, CHARACTERS_TEXT))
         End If
         result.Add(New DialogChoice(GAME_MENU_CHOICE, GAME_MENU_TEXT))
         Return result

@@ -9,5 +9,9 @@ Friend MustInherit Class FactionTypeDescriptor
     End Sub
 
     Friend MustOverride Function GetName(faction As Faction) As String
-    Friend MustOverride Function Describe(faction As Faction) As IEnumerable(Of IDialogLine)
+    Friend Overridable Function Describe(faction As Faction) As IEnumerable(Of IDialogLine)
+        Return {
+            New DialogLine(MoodType.Info, $"Characters: {faction.CharacterCount}")
+            }
+    End Function
 End Class

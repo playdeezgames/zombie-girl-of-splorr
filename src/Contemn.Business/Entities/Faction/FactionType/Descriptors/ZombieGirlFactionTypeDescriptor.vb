@@ -10,8 +10,4 @@ Friend Class ZombieGirlFactionTypeDescriptor
     Friend Overrides Function GetName(faction As Faction) As String
         Return "Zombie Girls"
     End Function
-
-    Friend Overrides Function Describe(faction As Faction) As IEnumerable(Of IDialogLine)
-        Return {}
-    End Function
 End Class
