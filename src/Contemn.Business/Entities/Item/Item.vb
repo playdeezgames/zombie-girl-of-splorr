@@ -33,6 +33,12 @@ Friend Class Item
         End Get
     End Property
 
+    Public Overrides ReadOnly Property Description As IEnumerable(Of IDialogLine)
+        Get
+            Return ItemType.ToItemTypeDescriptor.Describe(Me)
+        End Get
+    End Property
+
     Public Overrides Sub Recycle()
         Clear()
         Data.RecycledItems.Add(ItemId)

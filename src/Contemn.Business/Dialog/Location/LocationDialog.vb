@@ -14,7 +14,7 @@ Friend Class LocationDialog
     End Sub
 
     Private Shared Function GenerateLines(location As ILocation) As IEnumerable(Of IDialogLine)
-        Return Array.Empty(Of IDialogLine)
+        Return location.Description
     End Function
 
     Private Shared Function GenerateChoices(location As ILocation) As IEnumerable(Of IDialogChoice)

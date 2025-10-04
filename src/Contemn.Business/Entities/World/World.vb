@@ -47,6 +47,12 @@ Public Class World
         End Set
     End Property
 
+    Public Overrides ReadOnly Property Description As IEnumerable(Of IDialogLine)
+        Get
+            Return Array.Empty(Of IDialogLine)
+        End Get
+    End Property
+
     Public Overrides Sub Clear()
         MyBase.Clear()
         Data.Locations.Clear()

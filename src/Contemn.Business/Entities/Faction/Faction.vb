@@ -51,6 +51,12 @@ Public Class Faction
         End Get
     End Property
 
+    Public Overrides ReadOnly Property Description As IEnumerable(Of IDialogLine)
+        Get
+            Return FactionType.ToFactionTypeDescriptor.Describe(Me)
+        End Get
+    End Property
+
     Protected Overrides ReadOnly Property EntityData As FactionData
         Get
             Return Data.Factions(FactionId)

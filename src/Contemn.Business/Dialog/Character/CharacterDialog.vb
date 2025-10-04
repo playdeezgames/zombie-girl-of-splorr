@@ -14,9 +14,7 @@ Friend Class CharacterDialog
     End Sub
 
     Private Shared Function GenerateLines(character As ICharacter) As IEnumerable(Of IDialogLine)
-        Dim result = character.World.Messages.Select(Function(x) New DialogLine(x.Mood, x.Text)).ToList
-        character.World.DismissMessages()
-        Return result
+        Return character.Description
     End Function
 
     Private Shared Function GenerateChoices(character As ICharacter) As IEnumerable(Of IDialogChoice)

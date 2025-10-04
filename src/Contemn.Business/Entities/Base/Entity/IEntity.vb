@@ -1,4 +1,6 @@
-﻿Public Interface IEntity
+﻿Imports TGGD.Business
+
+Public Interface IEntity
     Sub PlaySfx(sfx As String)
     Sub Clear()
     Sub Recycle()
@@ -19,4 +21,5 @@
     Function GetTag(tagType As String) As Boolean
     Function FormatStatistic(statisticType As String) As String
     Function ChangeStatistic(statisticType As String, delta As Integer) As Integer
+    ReadOnly Property Description As IEnumerable(Of IDialogLine)
 End Interface

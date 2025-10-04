@@ -53,6 +53,12 @@ Friend Class Character
         End Get
     End Property
 
+    Public Overrides ReadOnly Property Description As IEnumerable(Of IDialogLine)
+        Get
+            Return CharacterType.ToCharacterTypeDescriptor.Describe(Me)
+        End Get
+    End Property
+
     Private Function CanPerform(verbType As String) As Boolean
         Return verbType.ToVerbTypeDescriptor.CanChoose(Me)
     End Function

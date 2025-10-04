@@ -16,7 +16,7 @@ Friend Class FactionDialog
     End Sub
 
     Private Shared Function GenerateLines(faction As IFaction) As IEnumerable(Of IDialogLine)
-        Return Array.Empty(Of IDialogLine)
+        Return faction.Description
     End Function
 
     Private Shared Function GenerateChoices(faction As IFaction) As IEnumerable(Of IDialogChoice)

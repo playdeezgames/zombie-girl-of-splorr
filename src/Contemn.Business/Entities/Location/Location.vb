@@ -1,4 +1,5 @@
 ﻿Imports Contemn.Data
+Imports TGGD.Business
 
 Friend Class Location
     Inherits InventoryEntity(Of LocationData)
@@ -68,6 +69,12 @@ Friend Class Location
     Public ReadOnly Property Characters As IEnumerable(Of ICharacter) Implements ILocation.Characters
         Get
             Return EntityData.CharacterIds.Select(Function(x) World.GetCharacter(x))
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property Description As IEnumerable(Of IDialogLine)
+        Get
+            Return LocationType.ToLocationTypeDescriptor.Describe(Me)
         End Get
     End Property
 

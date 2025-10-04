@@ -35,4 +35,10 @@ Friend Class ZombieGirlCharacterTypeDescriptor
     Friend Overrides Function GetName(character As Character) As String
         Return character.GetMetadata(MetadataType.Name)
     End Function
+
+    Friend Overrides Function Describe(character As Character) As IEnumerable(Of IDialogLine)
+        Dim result = character.World.Messages.Select(Function(x) New DialogLine(x.Mood, x.Text)).ToList
+        character.World.DismissMessages()
+        Return result
+    End Function
 End Class

@@ -1,4 +1,6 @@
-﻿Friend MustInherit Class FactionTypeDescriptor
+﻿Imports TGGD.Business
+
+Friend MustInherit Class FactionTypeDescriptor
     Friend ReadOnly Property FactionType As String
     Friend ReadOnly Property FactionCount As Integer
     Sub New(factionType As String, factionCount As Integer)
@@ -7,4 +9,5 @@
     End Sub
 
     Friend MustOverride Function GetName(faction As Faction) As String
+    Friend MustOverride Function Describe(faction As Faction) As IEnumerable(Of IDialogLine)
 End Class

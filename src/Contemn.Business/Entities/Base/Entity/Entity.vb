@@ -1,4 +1,5 @@
 ﻿Imports Contemn.Data
+Imports TGGD.Business
 
 Public MustInherit Class Entity(Of TEntityData As EntityData)
     Implements IEntity
@@ -12,6 +13,8 @@ Public MustInherit Class Entity(Of TEntityData As EntityData)
             Return New World(Data, _playSfx)
         End Get
     End Property
+
+    Public MustOverride ReadOnly Property Description As IEnumerable(Of IDialogLine) Implements IEntity.Description
 
     Sub New(data As WorldData, playSfx As Action(Of String))
         Me.Data = data

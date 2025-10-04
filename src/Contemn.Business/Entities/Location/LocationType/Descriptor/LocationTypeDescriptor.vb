@@ -12,4 +12,6 @@ Friend MustInherit Class LocationTypeDescriptor
         Return LocationTypeName
     End Function
     Friend MustOverride Sub OnProcessTurn(location As Location)
+
+    Friend MustOverride Function Describe(location As Location) As IEnumerable(Of IDialogLine)
 End Class
