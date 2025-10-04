@@ -5,11 +5,13 @@ Friend Class GameMenuDialog
 
     Private Shared ReadOnly CONTINUE_CHOICE As String = NameOf(CONTINUE_CHOICE)
     Private Shared ReadOnly ABANDON_CHOICE As String = NameOf(ABANDON_CHOICE)
+    Private ReadOnly world As IWorld
+    Private ReadOnly previousDialog As Func(Of IDialog)
     Const CONTINUE_TEXT = "Continue"
     Const ABANDON_TEXT = "Abandon"
-    Private ReadOnly world As IWorld
 
-    Public Sub New(world As IWorld)
+
+    Public Sub New(world As IWorld, previousDialog As Func(Of IDialog))
         MyBase.New(
             "Game Menu",
             {
@@ -18,6 +20,7 @@ Friend Class GameMenuDialog
             },
             Array.Empty(Of IDialogLine))
         Me.world = world
+        Me.previousDialog = previousDialog
     End Sub
 
     Public Overrides Function Choose(choice As String) As IDialog
@@ -25,13 +28,13 @@ Friend Class GameMenuDialog
             Case CONTINUE_CHOICE
                 Return CancelDialog()
             Case ABANDON_CHOICE
-                Return New ConfirmAbandonDialog(world)
+                Return New ConfirmAbandonDialog(world, previousDialog)
             Case Else
                 Throw New NotImplementedException
         End Select
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New FactionDialog(world.PlayerFaction)
+        Return previousDialog()
     End Function
 End Class

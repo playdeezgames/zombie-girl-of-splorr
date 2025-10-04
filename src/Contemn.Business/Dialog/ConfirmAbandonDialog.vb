@@ -5,10 +5,11 @@ Friend Class ConfirmAbandonDialog
     Private Shared ReadOnly NO_CHOICE As String = NameOf(NO_CHOICE)
     Private Shared ReadOnly YES_CHOICE As String = NameOf(YES_CHOICE)
     Private ReadOnly world As IWorld
+    Private previousDialog As Func(Of IDialog)
     Const NO_TEXT = "No"
     Const YES_TEXT = "Yes"
 
-    Public Sub New(world As IWorld)
+    Public Sub New(world As IWorld, previousDialog As Func(Of IDialog))
         MyBase.New(
             "Are you sure you want to abandon?",
             {
@@ -17,6 +18,7 @@ Friend Class ConfirmAbandonDialog
             },
             Array.Empty(Of IDialogLine))
         Me.world = world
+        Me.previousDialog = previousDialog
     End Sub
 
     Public Overrides Function Choose(choice As String) As IDialog
@@ -32,6 +34,6 @@ Friend Class ConfirmAbandonDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New GameMenuDialog(world)
+        Return New GameMenuDialog(world, previousDialog)
     End Function
 End Class

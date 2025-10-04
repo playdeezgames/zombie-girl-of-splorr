@@ -45,6 +45,6 @@ Friend Class FactionDialog
     End Function
 
     Public Overrides Function CancelDialog() As IDialog
-        Return New GameMenuDialog(faction.World)
+        Return New GameMenuDialog(faction.World, Function() Me)
     End Function
 End Class
