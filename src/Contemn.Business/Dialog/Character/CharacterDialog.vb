@@ -31,7 +31,7 @@ Friend Class CharacterDialog
 
     Public Overrides Function Choose(choice As String) As IDialog
         Select Case choice
-            Case NEVER_MIND_TEXT
+            Case NEVER_MIND_CHOICE
                 Return CancelDialog()
             Case FACTION_CHOICE
                 Return New FactionDialog(character.Faction)
