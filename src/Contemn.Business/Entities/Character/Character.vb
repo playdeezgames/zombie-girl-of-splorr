@@ -109,8 +109,7 @@ Friend Class Character
     End Function
 
     Public Function AvailableVerbsOfCategory(verbCategoryType As String) As IEnumerable(Of String) Implements ICharacter.AvailableVerbsOfCategory
-        Dim candidates = VerbTypes.AllOfCategory(verbCategoryType).ToList
-        Return candidates.Where(Function(x) CanPerform(x))
+        Return VerbTypes.AllOfCategory(verbCategoryType).ToList.Where(Function(x) CanPerform(x))
     End Function
 
     Public Function ProcessTurn() As IEnumerable(Of IDialogLine) Implements ICharacter.ProcessTurn
@@ -122,4 +121,8 @@ Friend Class Character
         EntityData.LocationId = 0
         EntityData.CharacterType = Nothing
     End Sub
+
+    Public Function HasAvailableVerbsOfCategory(verbCategoryType As String) As Boolean Implements ICharacter.HasAvailableVerbsOfCategory
+        Return VerbTypes.AllOfCategory(verbCategoryType).Any(Function(x) CanPerform(x))
+    End Function
 End Class

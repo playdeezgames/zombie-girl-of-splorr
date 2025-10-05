@@ -13,7 +13,10 @@ Public Class CharacterActionsDialog
     End Sub
 
     Public Shared Function LaunchMenu(character As ICharacter) As Func(Of IDialog)
-        Return Function() New CharacterActionsDialog(character, VerbCategoryType.Action, "Actions...")
+        Return Function() If(
+                   character.HasAvailableVerbsOfCategory(VerbCategoryType.Action),
+                   CType(New CharacterActionsDialog(character, VerbCategoryType.Action, "Actions..."), IDialog),
+                   New CharacterDialog(character))
     End Function
 
     Private Shared Function GenerateChoices(character As ICharacter, verbCategoryType As String) As IEnumerable(Of IDialogChoice)

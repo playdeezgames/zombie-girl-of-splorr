@@ -8,6 +8,7 @@ Public Interface ICharacter
     Function Perform(verbType As String) As IDialog
     ReadOnly Property AvailableVerbs As IEnumerable(Of String)
     Function AvailableVerbsOfCategory(verbCategoryType As String) As IEnumerable(Of String)
+    Function HasAvailableVerbsOfCategory(verbCategoryType As String) As Boolean
     Function Interact(initiator As ICharacter) As IDialog
     Function ProcessTurn() As IEnumerable(Of IDialogLine)
     Property Faction As IFaction
