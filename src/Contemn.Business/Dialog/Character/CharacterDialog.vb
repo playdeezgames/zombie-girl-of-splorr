@@ -5,6 +5,8 @@ Friend Class CharacterDialog
     Private Shared ReadOnly ACTIONS_CHOICE As String = NameOf(ACTIONS_CHOICE)
     Private Shared ReadOnly FACTION_CHOICE As String = NameOf(FACTION_CHOICE)
     Private Shared ReadOnly LOCATION_CHOICE As String = NameOf(LOCATION_CHOICE)
+    Private Shared ReadOnly OTHER_CHARACTERS_CHOICE As String = NameOf(OTHER_CHARACTERS_CHOICE)
+    Const OTHER_CHARACTERS_TEXT = "Other Characters..."
     Const ACTIONS_TEXT = "Actions..."
     Private ReadOnly character As ICharacter
 
@@ -18,15 +20,17 @@ Friend Class CharacterDialog
     End Function
 
     Private Shared Function GenerateChoices(character As ICharacter) As IEnumerable(Of IDialogChoice)
-        Dim result As New List(Of IDialogChoice) From {
+        Return {
             New DialogChoice(NEVER_MIND_CHOICE, NEVER_MIND_TEXT),
             New DialogChoice(FACTION_CHOICE, $"Faction: {character.Faction.Name}"),
             New DialogChoice(LOCATION_CHOICE, $"Location: {character.Location.Name}")
-            }
-        If character.Faction.IsPlayerFaction Then
-            result.Add(New DialogChoice(ACTIONS_CHOICE, ACTIONS_TEXT))
-        End If
-        Return result
+            }.
+            AppendIf(
+                character.HasOtherCharactersInLocation,
+                New DialogChoice(OTHER_CHARACTERS_CHOICE, OTHER_CHARACTERS_TEXT)).
+            AppendIf(
+                character.Faction.IsPlayerFaction,
+                New DialogChoice(ACTIONS_CHOICE, ACTIONS_TEXT))
     End Function
 
     Public Overrides Function Choose(choice As String) As IDialog
@@ -39,6 +43,8 @@ Friend Class CharacterDialog
                 Return New CharacterActionsDialog(character, VerbCategoryType.Action, ACTIONS_TEXT)
             Case LOCATION_CHOICE
                 Return New LocationDialog(character.Location)
+            Case OTHER_CHARACTERS_CHOICE
+                Return New OtherCharactersDialog(character)
             Case Else
                 Throw New NotImplementedException
         End Select
