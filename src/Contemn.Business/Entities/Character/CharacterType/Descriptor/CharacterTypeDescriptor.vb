@@ -13,10 +13,12 @@ Friend MustInherit Class CharacterTypeDescriptor
     Friend MustOverride Sub HandleRemoveItem(character As ICharacter, item As IItem)
     Friend MustOverride Function OnInteract(target As ICharacter, initiator As ICharacter) As IDialog
     Friend MustOverride Function OnProcessTurn(character As ICharacter) As IEnumerable(Of IDialogLine)
-    Friend MustOverride Function GetName(character As Character) As String
-    Friend Overridable Function Describe(character As Character) As IEnumerable(Of IDialogLine)
+    Friend MustOverride Function GetName(character As ICharacter) As String
+    Friend Overridable Function Describe(character As ICharacter) As IEnumerable(Of IDialogLine)
         Return Array.Empty(Of IDialogLine).
             AppendIf(character.GetTag(TagType.IsZombie), New DialogLine(MoodType.Info, "Is a zombie!")).
-            AppendIf(character.GetTag(TagType.HasTastyBrains), New DialogLine(MoodType.Info, "Has tasty brains!"))
+            AppendIf(character.GetTag(TagType.HasTastyBrains), New DialogLine(MoodType.Info, "Has tasty brains!")).
+            Append(New DialogLine(MoodType.Info, $"Location: {character.Location.Name}")).
+            AppendIf(character.HasOtherCharactersInLocation, New DialogLine(MoodType.Info, $"{character.OtherCharactersInLocationCount} other characters"))
     End Function
 End Class

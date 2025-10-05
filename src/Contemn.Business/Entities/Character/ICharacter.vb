@@ -13,4 +13,6 @@ Public Interface ICharacter
     Property Faction As IFaction
     ReadOnly Property Name As String
     ReadOnly Property OtherCharactersInLocation As IEnumerable(Of ICharacter)
+    ReadOnly Property HasOtherCharactersInLocation As Boolean
+    ReadOnly Property OtherCharactersInLocationCount As Integer
 End Interface

@@ -30,7 +30,7 @@ Friend Class CuteBoyCharacterTypeDescriptor
         Return Array.Empty(Of IDialogLine)
     End Function
 
-    Friend Overrides Function GetName(character As Character) As String
+    Friend Overrides Function GetName(character As ICharacter) As String
         Return character.GetMetadata(MetadataType.Name)
     End Function
 End Class

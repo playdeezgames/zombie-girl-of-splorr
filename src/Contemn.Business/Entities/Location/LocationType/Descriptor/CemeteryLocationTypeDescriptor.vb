@@ -7,14 +7,14 @@ Friend Class CemeteryLocationTypeDescriptor
         MyBase.New(NameOf(CemeteryLocationTypeDescriptor), "Cemetery")
     End Sub
 
-    Friend Overrides Sub OnInitialize(location As Location)
+    Friend Overrides Sub OnInitialize(location As ILocation)
     End Sub
 
-    Friend Overrides Sub OnProcessTurn(location As Location)
+    Friend Overrides Sub OnProcessTurn(location As ILocation)
         Throw New NotImplementedException()
     End Sub
 
-    Friend Overrides Function Describe(location As Location) As IEnumerable(Of IDialogLine)
+    Friend Overrides Function Describe(location As ILocation) As IEnumerable(Of IDialogLine)
         Return {}
     End Function
 End Class

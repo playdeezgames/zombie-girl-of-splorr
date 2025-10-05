@@ -65,6 +65,18 @@ Friend Class Character
         End Get
     End Property
 
+    Public ReadOnly Property HasOtherCharactersInLocation As Boolean Implements ICharacter.HasOtherCharactersInLocation
+        Get
+            Return OtherCharactersInLocationCount > 0
+        End Get
+    End Property
+
+    Public ReadOnly Property OtherCharactersInLocationCount As Integer Implements ICharacter.OtherCharactersInLocationCount
+        Get
+            Return Location.CharacterCount - 1
+        End Get
+    End Property
+
     Private Function CanPerform(verbType As String) As Boolean
         Return verbType.ToVerbTypeDescriptor.CanChoose(Me)
     End Function

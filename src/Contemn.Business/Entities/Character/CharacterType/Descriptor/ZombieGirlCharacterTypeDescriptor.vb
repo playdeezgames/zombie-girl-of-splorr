@@ -33,11 +33,11 @@ Friend Class ZombieGirlCharacterTypeDescriptor
         Throw New NotImplementedException()
     End Function
 
-    Friend Overrides Function GetName(character As Character) As String
+    Friend Overrides Function GetName(character As ICharacter) As String
         Return character.GetMetadata(MetadataType.Name)
     End Function
 
-    Friend Overrides Function Describe(character As Character) As IEnumerable(Of IDialogLine)
+    Friend Overrides Function Describe(character As ICharacter) As IEnumerable(Of IDialogLine)
         Dim result = character.World.Messages.Select(Function(x) New DialogLine(x.Mood, x.Text)).ToList
         character.World.DismissMessages()
         Return MyBase.

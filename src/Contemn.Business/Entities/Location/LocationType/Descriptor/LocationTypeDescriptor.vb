@@ -7,11 +7,11 @@ Friend MustInherit Class LocationTypeDescriptor
         Me.LocationType = locationType
         Me.LocationTypeName = locationTypeName
     End Sub
-    Friend MustOverride Sub OnInitialize(location As Location)
-    Friend Overridable Function GetName(location As Location) As String
+    Friend MustOverride Sub OnInitialize(location As ILocation)
+    Friend Overridable Function GetName(location As ILocation) As String
         Return LocationTypeName
     End Function
-    Friend MustOverride Sub OnProcessTurn(location As Location)
+    Friend MustOverride Sub OnProcessTurn(location As ILocation)
 
-    Friend MustOverride Function Describe(location As Location) As IEnumerable(Of IDialogLine)
+    Friend MustOverride Function Describe(location As ILocation) As IEnumerable(Of IDialogLine)
 End Class
